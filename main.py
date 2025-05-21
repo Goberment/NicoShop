@@ -1,7 +1,10 @@
+from tkinter import *
 from entities.cliente import Cliente
 from entities.producto import Producto
 from persistence.db import SessionLocal
 
+raiz=Tk()
+raiz.mainloop()
 session = SessionLocal()
 
 def get():
@@ -20,8 +23,9 @@ dm= input("1.-Crear cuenta" \
 while(dm=="3" or dm=="4" or dm=="5" or dm=="6"):
     if dm =="3":
          
+         
          get()
-         compra=input("Selecciona un producto")
+         compra=input("Selecciona un producto o ()regresa al menu")
          
          while(compra=="1", compra=="2", compra=="3"):
             if compra=="1":
@@ -52,6 +56,7 @@ while(dm=="3" or dm=="4" or dm=="5" or dm=="6"):
                 else:
                     print("regresar al menu")
                     break
+        
     
     
     
