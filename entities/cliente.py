@@ -7,4 +7,5 @@ class Cliente(Base):
     nombre=Column(String)
     email=Column(String)
     password=Column(String)
+    tarjeta = Column(String) # se agrego tarjeta
     
