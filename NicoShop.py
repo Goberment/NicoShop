@@ -17,12 +17,19 @@ def save(nombre, email, password):
 
 print("-----Bienvenido a NicoShop------")
 
-Inicio=input("Iniciar sesión(1)---------Registrarse(2)---------: ")
+print("Iniciar sesión(1)---------Registrarse(2)---------")
+Inicio=input("Ingresa una opción: ")
 
 if Inicio=="1":
-    correo=input("Ingresa tu correo electronico: ")
+    email=input("Ingresa tu correo electronico: ")
     password=input("Ingresa tu contraseña: ")
+    while(email() and password()):
+        print("        Menu        ")
+        print("(1)Ver catalogo-(2)Ver Carrito-(3)Metodo de pago")
+        entrada=input("Selecciona una opción: ")
 
+        if entrada=="1":
+            print("Hola mundo")
 
 
 elif(Inicio=="2"):
