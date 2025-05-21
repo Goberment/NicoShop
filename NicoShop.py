@@ -27,38 +27,48 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
         cliente = session.query(Cliente).filter_by(email=correo, password=password).first()
 
         if cliente:  # si se encontró el cliente, se permite continuar
+            carrito = []  # se crea una lista vacía para almacenar productos seleccionados
+
             while True:
                 print("        Menu        ")
                 print("(1)Ver catalogo-(2)Ver Carrito-(3)Metodo de pago")
                 entrada = input("Selecciona una opción: ")
 
                 if entrada == "1":
-                    print("hellow")
-                    get()
-                    pr = input("Selecciona un producto: ")
+                    while True:  # ciclo para seguir comprando hasta que el usuario decida parar
+                        get()
+                        pr = input("Selecciona el ID del producto que deseas comprar: ")
+                        producto_seleccionado = session.query(Producto).filter_by(id=int(pr)).first()
 
-                    if pr == "1":
-                        print("Se agrego al carrito")
-                        sl = input("Quieres seguir comprando si(1)-no(2): ")
-                        if sl == "1":
-                            break
-                        elif sl == "2":
-                            break
-                    if pr == "2":
-                        print("Se agrego al carrito")
-                        sl = input("Quieres seguir comprando si(1)-no(2): ")
-                        if sl == "1":
-                            break
-                        elif sl == "2":
-                            break
-                    if pr == "3":
-                        print("Se agrego al carrito")
-                        sl = input("Quieres seguir comprando si(1)-no(2): ")
-                        if sl == "1":
-                            break
-                        elif sl == "2":
-                            break
-               
+                        if producto_seleccionado:
+                            carrito.append(producto_seleccionado)  # se agrega el producto a la lista
+                            print("Se agregó al carrito:", producto_seleccionado.nombre)
+                        else:
+                            print("Producto no encontrado.")
+
+                        sl = input("¿Quieres seguir comprando? si(1) - no(2): ")
+                        if sl == "2":
+                            print("\n------ Productos en tu carrito ------")
+                            total = 0
+                            for prod in carrito:
+                                print(f"{prod.nombre} - {prod.descripcion} - ${prod.precio}")
+                                total += float(prod.precio)  # se convierte a número para la suma
+
+                            print(f"Total a pagar: ${total}")
+                            print("¿Deseas ir a pagar? (Sí o No)")  # mensaje final para ir a pagar
+                            break  # se sale del ciclo de compras
+
+                elif entrada == "2":
+                    print("Carrito actual:")
+                    if carrito:
+                        for prod in carrito:
+                            print(f"{prod.nombre} - ${prod.precio}")
+                    else:
+                        print("Tu carrito está vacío.")
+
+                elif entrada == "3":
+                    print("Opciones de pago: Tarjeta, Transferencia o Pago en tienda")
+
         else:
             print("Credenciales incorrectas. Intenta nuevamente.")  # mensaje de error si el login falla
 
@@ -70,5 +80,3 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
         print("Cuenta creada con éxito. Vuelve a iniciar sesión.")  # mensaje de confirmación de que la nueva cuenta fue creada con exito
     else:
         print("Crea una cuenta")
-print("joseJUARREZ")
-print("chivole")
