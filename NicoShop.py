@@ -70,3 +70,5 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
         print("Cuenta creada con éxito. Vuelve a iniciar sesión.")  # mensaje de confirmación de que la nueva cuenta fue creada con exito
     else:
         print("Crea una cuenta")
+print("joseJUARREZ")
+print("chivole")
