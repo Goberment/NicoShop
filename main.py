@@ -1,10 +1,9 @@
-from tkinter import *
+
 from entities.cliente import Cliente
 from entities.producto import Producto
 from persistence.db import SessionLocal
 
-raiz=Tk()
-raiz.mainloop()
+
 session = SessionLocal()
 
 def get():
