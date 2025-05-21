@@ -39,12 +39,26 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
 
                     if pr == "1":
                         print("Se agrego al carrito")
-                        sl = input("Quieres seguir si(1)-no(2): ")
+                        sl = input("Quieres seguir comprando si(1)-no(2): ")
                         if sl == "1":
                             break
                         elif sl == "2":
                             break
-                break  # break salir del bucle principal después del login correcto
+                    if pr == "2":
+                        print("Se agrego al carrito")
+                        sl = input("Quieres seguir comprando si(1)-no(2): ")
+                        if sl == "1":
+                            break
+                        elif sl == "2":
+                            break
+                    if pr == "3":
+                        print("Se agrego al carrito")
+                        sl = input("Quieres seguir comprando si(1)-no(2): ")
+                        if sl == "1":
+                            break
+                        elif sl == "2":
+                            break
+               
         else:
             print("Credenciales incorrectas. Intenta nuevamente.")  # mensaje de error si el login falla
 
