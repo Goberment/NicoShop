@@ -13,7 +13,7 @@ def get():
         print(f"{p.id}, Nombre: {p.nombre}, Precio: ${p.precio}")
 
 def save(nombre, email, password, tarjeta):
-    c = Cliente(nombre=nombre, email=email, password=password, tarjeta=tarjeta)  # se agrega la tarjeta al cliente
+    c = Cliente(nombre=nombre, email=email, password=password, tarjeta=tarjeta)  # ahora guarda también la tarjeta
     session.add(c)
     session.commit()
 
@@ -26,9 +26,8 @@ def enviar_correo_bienvenida(destinatario):
         msg['To'] = destinatario
         msg.set_content('Gracias por registrarte en NicoShop. ¡Disfruta tus compras!')
 
-        # Conexión con el servidor SMTP de Gmail
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login('nicolasbecerramuro@gmail.com', 'yspqnoofirxbjvwi')  # correo personal y contraseña de aplicación
+            smtp.login('nicolasbecerramuro@gmail.com', 'yspqnoofirxbjvwi')
             smtp.send_message(msg)
 
         print("Correo de bienvenida enviado con éxito.")
@@ -37,38 +36,31 @@ def enviar_correo_bienvenida(destinatario):
 
 print("-----Bienvenido a NicoShop------")
 
-while True:  # aqui se agrega bucle para que regrese al menú después del registro
-   
-    print("1.-Inicio sesion")
-    print("2,.Registrarse")
-
-    Inicio = input("Selecciona una opción: ")
+while True:
+    Inicio = input("Iniciar sesion(1)---------Registrarse(2)---------: ")
 
     if Inicio == "1":
         correo = input("Ingresa tu correo electronico: ")
         password = input("Ingresa tu contraseña: ")
 
-        # validación con base de datos para verificar si el cliente existe
         cliente = session.query(Cliente).filter_by(email=correo, password=password).first()
 
-        if cliente:  # si se encontró el cliente, se permite continuar
-            carrito = []  # lista vacía para almacenar productos seleccionados
+        if cliente:
+            carrito = []
 
             while True:
                 print("        Menu        ")
-                print("(1)Ver catalogo")
-                print("2,.Ver carrito")
-                print("3.-Metodo de pago")
+                print("(1)Ver catalogo-(2)Ver Carrito-(3)Metodo de pago")
                 entrada = input("Selecciona una opción: ")
 
                 if entrada == "1":
-                    while True:  # ciclo para seguir comprando hasta que el usuario decida parar
+                    while True:
                         get()
                         pr = input("Selecciona el ID del producto que deseas comprar: ")
                         producto_seleccionado = session.query(Producto).filter_by(id=int(pr)).first()
 
                         if producto_seleccionado:
-                            carrito.append(producto_seleccionado)  # se agrega el producto a la lista
+                            carrito.append(producto_seleccionado)
                             print("Se agregó al carrito:", producto_seleccionado.nombre)
                         else:
                             print("Producto no encontrado.")
@@ -79,21 +71,11 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
                             total = 0
                             for prod in carrito:
                                 print(f"{prod.nombre} - {prod.descripcion} - ${prod.precio}")
-                                total += float(prod.precio)  # se convierte a número para la suma
+                                total += float(prod.precio)
 
                             print(f"Total a pagar: ${total}")
-                            print("¿Deseas ir a pagar? (Sí o No)")  # mensaje final para ir a pagar
-
-                        if sl == "3":
-                            print("\n------ Productos en tu carrito ------")
-                            total = 0
-                            for prod in carrito:
-                                print(f"{prod.nombre} - {prod.descripcion} - ${prod.precio}")
-                                total += float(prod.precio)  # se convierte a número para la suma
-
-                            print(f"Total a pagar: ${total}")
-                            print("¿Deseas ir a pagar? (Sí o No)")  # mensaje final para ir a pagar
-                            break  # se sale del ciclo de compras
+                            print("¿Deseas ir a pagar? (Sí o No)")
+                            break
 
                 elif entrada == "2":
                     print("Carrito actual:")
@@ -104,18 +86,38 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
                         print("Tu carrito está vacío.")
 
                 elif entrada == "3":
-                    print("Opciones de pago: Tarjeta, Transferencia o Pago en tienda")
+                    print("Opciones de pago:\n(1) Tarjeta\n(2) Depósito OXXO")
+                    metodo = input("Selecciona el método de pago (1 o 2): ")
+
+                    if metodo == "1":
+                        print(f"Tu tarjeta registrada es: {cliente.tarjeta}")
+                        usar = input("¿Deseas usar esta tarjeta? (1: Sí, 2: No): ")
+                        if usar == "1":
+                            print("Compra exitosa con tu tarjeta registrada.")
+                        elif usar == "2":
+                            nueva_tarjeta = input("Ingresa el nuevo número de tarjeta: ")
+                            cliente.tarjeta = nueva_tarjeta
+                            session.commit()
+                            print("Tarjeta actualizada y compra exitosa.")
+                        else:
+                            print("Opción no válida.")
+
+                    elif metodo == "2":
+                        print("Realiza tu pago en OXXO con el siguiente código:")
+                        print("|| 1234 5678 9012 3456 ||")  # Código simulado tipo código de barras
+                        print("Compra registrada. Recibirás confirmación cuando se confirme el pago.")
 
         else:
-            print("Credenciales incorrectas. Intenta nuevamente.") 
+            print("Credenciales incorrectas. Intenta nuevamente.")
 
     elif Inicio == "2":
         nombre = input("Ingresa su nombre: ")
         email = input("Ingresa su correo electronico: ")
         password = input("Ingresa una contraseña: ")
-        tarjeta = input("Ingresa tu número de tarjeta: ")  
+        tarjeta = input("Ingresa tu número de tarjeta: ")  # NUEVO CAMPO requerido en el registro
         save(nombre, email, password, tarjeta)
-        enviar_correo_bienvenida(email)  # Aquí se envía el correo 
-        print("Cuenta creada con éxito. Vuelve a iniciar sesión.")  # mensaje de creacion de cuenta correctamente 
+        enviar_correo_bienvenida(email)
+        print("Cuenta creada con éxito. Vuelve a iniciar sesión.")
     else:
         print("Crea una cuenta")
+
