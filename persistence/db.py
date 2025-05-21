@@ -3,6 +3,6 @@ from sqlalchemy.orm import sessionmaker
 
 CONNECTION = 'mysql+pymysql://root:Guaymas@localhost:3306/nicoshop'
 
-SessionLocal = sessionmaker(bind =create_engine(CONNECTION, echo = True))
+SessionLocal = sessionmaker(bind =create_engine(CONNECTION, echo = False))
 
                             
