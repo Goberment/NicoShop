@@ -17,7 +17,7 @@ def save(nombre, email, password, tarjeta):
     session.add(c)
     session.commit()
 
-# Función para enviar correo con SMTP
+# Función para enviar correo de bienvenida al usuario registrado
 def enviar_correo_bienvenida(destinatario):
     try:
         msg = EmailMessage()
@@ -38,7 +38,11 @@ def enviar_correo_bienvenida(destinatario):
 print("-----Bienvenido a NicoShop------")
 
 while True:  # aqui se agrega bucle para que regrese al menú después del registro
-    Inicio = input("Iniciar sesion(1)---------Registrarse(2)---------: ")
+   
+    print("1.-Inicio sesion")
+    print("2,.Registrarse")
+
+    Inicio = input("Selecciona una opción: ")
 
     if Inicio == "1":
         correo = input("Ingresa tu correo electronico: ")
@@ -48,11 +52,13 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
         cliente = session.query(Cliente).filter_by(email=correo, password=password).first()
 
         if cliente:  # si se encontró el cliente, se permite continuar
-            carrito = []  # crea lista vacía para almacenar productos seleccionados
+            carrito = []  # lista vacía para almacenar productos seleccionados
 
             while True:
                 print("        Menu        ")
-                print("(1)Ver catalogo-(2)Ver Carrito-(3)Metodo de pago")
+                print("(1)Ver catalogo")
+                print("2,.Ver carrito")
+                print("3.-Metodo de pago")
                 entrada = input("Selecciona una opción: ")
 
                 if entrada == "1":
@@ -76,8 +82,18 @@ while True:  # aqui se agrega bucle para que regrese al menú después del regis
                                 total += float(prod.precio)  # se convierte a número para la suma
 
                             print(f"Total a pagar: ${total}")
-                            print("¿Deseas ir a pagar? (Sí o No)") 
-                            break  #sale compras
+                            print("¿Deseas ir a pagar? (Sí o No)")  # mensaje final para ir a pagar
+
+                        if sl == "3":
+                            print("\n------ Productos en tu carrito ------")
+                            total = 0
+                            for prod in carrito:
+                                print(f"{prod.nombre} - {prod.descripcion} - ${prod.precio}")
+                                total += float(prod.precio)  # se convierte a número para la suma
+
+                            print(f"Total a pagar: ${total}")
+                            print("¿Deseas ir a pagar? (Sí o No)")  # mensaje final para ir a pagar
+                            break  # se sale del ciclo de compras
 
                 elif entrada == "2":
                     print("Carrito actual:")
