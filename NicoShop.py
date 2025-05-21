@@ -22,7 +22,24 @@ while True:  # aqui ase agrega bucle para que regrese al menú después del regi
     if Inicio == "1":
         correo = input("Ingresa tu correo electronico: ")
         password = input("Ingresa tu contraseña: ")
-        break  # Este break sale del bucle si inicia sesión
+        while(email() and password()):
+            print("        Menu        ")
+            print("(1)Ver catalogo-(2)Ver Carrito-(3)Metodo de pago")
+            entrada=input("Selecciona una opción: ")
+
+            if entrada=="1":
+                print("hellow")
+                get()
+                pr=input("Selecciona un producto")
+                
+                if pr=="1":
+                    print("Se agrego al carrito")
+                    sl=input("Quieres seguir si(1)-no(2)")
+                    if sl=="1":
+                        break
+                    elif sl=="2":
+                        break
+
 
     elif Inicio == "2":
         nombre = input("Ingresa su nombre: ")
@@ -32,4 +49,3 @@ while True:  # aqui ase agrega bucle para que regrese al menú después del regi
         print("Cuenta creada con éxito. Vuelve a iniciar sesión.")  # mensaje de confirmación de que la nueva cuenta fue creada con exito
     else:
         print("Crea una cuenta")
-#ÑLKansfas
