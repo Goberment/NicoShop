@@ -30,6 +30,6 @@ while True:  # aqui ase agrega bucle para que regrese al menú después del regi
         password = input("Ingresa una contraseña: ")
         save(nombre, email, password)
         print("Cuenta creada con éxito. Vuelve a iniciar sesión.")  # mensaje de confirmación de que la nueva cuenta fue creada con exito
-
     else:
         print("Crea una cuenta")
+#ÑLKansfas
